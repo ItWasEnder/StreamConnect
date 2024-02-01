@@ -1,0 +1,24 @@
+{
+    "settings": [
+        {
+            "id": "theme",
+            "label": "Theme",
+            "type": "select",
+            "options": [ "default", "coffee" ],
+            "value": "default"
+        },
+        {
+            "id": "language",
+            "label": "Language",
+            "type": "select",
+            "options": ["English", "Spanish", "French"],
+            "value": "English"
+        },
+        {
+            "id": "fontSize",
+            "label": "Font Size",
+            "type": "number",
+            "value": 14
+        }
+    ]
+}

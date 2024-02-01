@@ -1,0 +1,76 @@
+{
+	"id": "tikfinity",
+    "enabled": false,
+    "name": "Tikfinity - Webserver",
+    "description": "This will host an api to allow tikfinity app interations",
+    "type": "webserver",
+	"connection": {
+		"host": "127.0.0.1",
+		"apiKey": "",
+		"port": 8832
+	},
+	"endpoints": [
+		{
+			"name": "AppInfo",
+			"path": "/api/app/info",
+			"parameters": [],
+			"method": "GET",
+			"request": {},
+			"response": {
+				"data": {
+					"author": "{{author}}",
+					"name": "{{name}}",
+					"version": "{{version}}"
+				}
+			}
+		},
+		{
+			"name": "GetCategories",
+			"path": "/api/features/actions",
+			"parameters": [],
+			"method": "GET",
+			"request": {},
+			"response": {
+				"data": [
+					{
+						"categoryId": "{{categoryId}}",
+						"categoryName": "{{categoryName}}"
+					}
+				]
+			}
+		},
+		{
+			"name": "GetActions",
+			"path": "/api/features/actions",
+			"parameters": ["categoryId"],
+			"method": "GET",
+			"request": {},
+			"response": {
+				"data": [
+					{
+						"actionId": "{{actionId}}",
+						"actionName": "{{actionName}}"
+					}
+				]
+			}
+		},
+		{
+			"name": "ExecuteAction",
+			"path": "/api/features/actions/exec",
+			"parameters": ["categoryId"],
+			"method": "POST",
+			"request": {
+				"categoryId": "{{categoryId}}",
+				"actionId": "{{actionId}}",
+                "context": {
+                    "userId": "{{userId}}",
+                    "username": "{{username}}",
+                    "coins": "{{coins}}"
+                }
+            },
+			"response": {
+                "data": []
+			}
+		}
+    ]
+}

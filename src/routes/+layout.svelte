@@ -33,7 +33,7 @@
 
 	.content {
 		overflow-x: hidden;
-		max-height: calc(100vh - 7rem);
+		max-height: calc(100vh - 6.5rem);
 		/* width: calc(100vw - 16rem); */
 	}
 </style>

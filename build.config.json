@@ -1,0 +1,19 @@
+{
+	"appId": "tv.ender",
+	"productName": "Stream Connect",
+	"directories": {
+		"output": "dist"
+	},
+	"files": [
+		"src/electron.cjs",
+		"src/preload.cjs",
+		"static/**/*",
+		{
+			"from": "build",
+			"to": ""
+		}
+	],
+	"win": {
+		"icon": "static/favicon.png"
+	}
+}

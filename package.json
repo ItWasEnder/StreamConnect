@@ -1,26 +1,34 @@
 {
+	"description": "An Electron app with SvelteKit",
+	"author": "ItWasEnder",
 	"name": "streamconnect",
 	"version": "0.0.1",
 	"private": true,
+	"main": "./src/electron.cjs",
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build",
-		"preview": "vite preview",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
-		"test": "vitest",
-		"lint": "prettier --check . && eslint .",
-		"format": "prettier --write ."
+		"dev": "cross-env NODE_ENV=dev npm run dev:all",
+		"dev:all": "concurrently -n=svelte,electron -c='#ff3e00',blue \"npm run dev:svelte\" \"npm run dev:electron\"",
+		"dev:svelte": "vite dev",
+		"dev:electron": "electron .",
+		"build": "cross-env NODE_ENV=production npm run build:svelte && npm run build:electron",
+		"build:svelte": "vite build",
+		"build:electron": "electron-builder -w --config build.config.json"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^3.0.0",
+		"@sveltejs/adapter-static": "^3.0.1",
 		"@sveltejs/kit": "^2.0.0",
 		"@sveltejs/vite-plugin-svelte": "^3.0.0",
 		"@types/eslint": "8.56.0",
 		"@typescript-eslint/eslint-plugin": "^6.0.0",
 		"@typescript-eslint/parser": "^6.0.0",
 		"autoprefixer": "^10.4.17",
+		"concurrently": "^8.2.2",
+		"cross-env": "^7.0.3",
 		"daisyui": "^4.6.0",
+		"electron": "^28.2.1",
+		"electron-builder": "^24.9.1",
+		"electron-reloader": "^1.2.3",
 		"eslint": "^8.56.0",
 		"eslint-config-prettier": "^9.1.0",
 		"eslint-plugin-svelte": "^2.35.1",
@@ -37,6 +45,9 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"axios": "^1.6.7",
+		"electron-serve": "^1.3.0",
+		"electron-window-state": "^5.0.3",
 		"tailwind-scrollbar": "^3.0.5"
 	}
 }
