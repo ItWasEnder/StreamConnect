@@ -17,6 +17,8 @@ const port = process.env.PORT || 5173;
 const devmode = !app.isPackaged;
 let window;
 
+
+
 function createWindow() {
 	let windowState = windowStateManager({
 		defaultWidth: 800,
