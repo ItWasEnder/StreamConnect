@@ -17,7 +17,7 @@ const port = process.env.PORT || 5173;
 const devmode = !app.isPackaged;
 let window;
 
-
+const tikfinity = require('./server/tikfinity-server');
 
 function createWindow() {
 	let windowState = windowStateManager({
@@ -32,7 +32,7 @@ function createWindow() {
 		minWidth: 600,
 		autoHideMenuBar: true,
 		webPreferences: {
-			contextIsolation: false,
+			contextIsolation: true,
 			nodeIntegration: true,
 			devTools: true,
 			preload: path.join(__dirname, 'preload.cjs')
@@ -44,6 +44,9 @@ function createWindow() {
 	});
 
 	windowState.manage(window);
+
+	// Open the DevTools console
+	window.webContents.openDevTools();
 
 	window.once('ready-to-show', () => {
 		window.show();
@@ -78,6 +81,8 @@ function createMainWindow() {
 	} else {
 		serveURL(window);
 	}
+
+	tikfinity.start();
 }
 
 app.once('ready', createMainWindow);

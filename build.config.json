@@ -5,9 +5,11 @@
 		"output": "dist"
 	},
 	"files": [
-		"src/electron.cjs",
-		"src/preload.cjs",
+		"electron/electron.cjs",
+		"electron/preload.cjs",
 		"static/**/*",
+		"config/**/*",
+		"src/server/**/*",
 		{
 			"from": "build",
 			"to": ""
