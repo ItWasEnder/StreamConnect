@@ -5,8 +5,8 @@
 		"output": "dist"
 	},
 	"files": [
-		"electron/electron.cjs",
-		"electron/preload.cjs",
+		"src/electron.cjs",
+		"src/preload.cjs",
 		"static/**/*",
 		"config/**/*",
 		"src/server/**/*",

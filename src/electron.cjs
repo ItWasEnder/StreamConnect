@@ -17,7 +17,7 @@ const port = process.env.PORT || 5173;
 const devmode = !app.isPackaged;
 let window;
 
-const tikfinity = require('../src/server/tikfinity-server.cjs');
+const tikfinity = require('./server/tikfinity-server.cjs');
 
 function createWindow() {
 	let windowState = windowStateManager({

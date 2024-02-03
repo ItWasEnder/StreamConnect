@@ -4,7 +4,7 @@
 	"name": "streamconnect",
 	"version": "0.0.1",
 	"private": true,
-	"main": "./electron/electron.cjs",
+	"main": "./src/electron.cjs",
 	"scripts": {
 		"dev": "cross-env NODE_ENV=dev npm run dev:all",
 		"dev:all": "concurrently -n=svelte,electron -c='#ff3e00',blue \"npm run dev:svelte\" \"npm run dev:electron\"",
