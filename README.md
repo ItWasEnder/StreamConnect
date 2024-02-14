@@ -10,9 +10,9 @@ Stream Connect provides a user-friendly interface to manage and monitor the comm
 
 To install the project, follow these steps:
 
-1. Clone the repository: `git clone https://github.com/EnderGamingFilms/StreamConnect-Bridge.git`
-2. Navigate to the project directory: `cd StreamConnect-Bridge`
-3. Run the setup script: `python setup.py`
+1. Clone the repository: `git clone https://github.com/EnderGamingFilms/StreamConnect.git`
+2. Run the setup script: `python setup.py`
+3. Select the installation option: `1`
 
 The setup script will automatically install the required npm packages for the project and package it for installation of the standalone application.
 
