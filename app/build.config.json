@@ -5,11 +5,12 @@
 		"output": "dist"
 	},
 	"files": [
-		"src/electron.cjs",
-		"src/preload.cjs",
 		"static/**/*",
-		"config/**/*",
-		"src/server/**/*",
+		"node_modules/**/*",
+		"!node_modules/**/*devDependencies*",
+		"StreamConnect-Bridge/dist**/*",
+		"StreamConnect-Bridge/proto/**/*",
+		"StreamConnect-Bridge/storage/**/*",
 		{
 			"from": "build",
 			"to": ""

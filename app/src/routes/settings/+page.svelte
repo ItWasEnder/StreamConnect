@@ -3,15 +3,14 @@
 	import { page } from '$app/stores';
 	import { goto } from '$app/navigation';
 
-	let settings: any = {};
-
 	onMount(async () => {
 		// settings = await fetch('/api/settings').then((r) => r.json());
 	});
 
+	const saveSettings = () => {
+		// window.api.saveSettings(settings);
+	}
 </script>
-
-{JSON.stringify(settings)}
 
 <h1 class="text-3xl font-medium mb-2">Settings</h1>
 <p>

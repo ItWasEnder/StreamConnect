@@ -1,23 +1,28 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-var-requires */
-const axios = require('axios');
-const windowStateManager = require('electron-window-state');
-const { app, BrowserWindow, ipcMain, ClientRequest } = require('electron');
-const serve = require('electron-serve');
-const path = require('path');
+import axios from 'axios';
+import windowStateManager from 'electron-window-state';
+import { app, BrowserWindow, ipcMain } from 'electron';
+import serve from 'electron-serve';
+import { fileURLToPath } from 'url';
+import path from 'path';
+// import electronReloader from 'electron-reloader';
 
-try {
-	require('electron-reloader')(module);
-} catch (e) {
-	console.log(e);
-}
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const serveURL = serve({ directory: '.' });
 const port = process.env.PORT || 5173;
 const devmode = !app.isPackaged;
 let window;
 
-const tikfinity = require('./server/tikfinity-server.cjs');
+
+
+console.log('Electron version', process.versions.electron);
+console.log(`------`);
+console.log(path.join(__dirname, 'assets', 'streamconnect.ico'));
+console.log(path.join(__dirname, 'preload.cjs'));
+console.log(`------`);
 
 function createWindow() {
 	let windowState = windowStateManager({
@@ -27,7 +32,7 @@ function createWindow() {
 
 	window = new BrowserWindow({
 		backgroundColor: 'whitesmoke',
-		icon: path.join(__dirname, 'assets', 'streamconnect.ico'),
+		// icon: path.join(__dirname, 'assets', 'streamconnect.ico'),
 		minHeight: 450,
 		minWidth: 600,
 		autoHideMenuBar: true,
@@ -81,8 +86,6 @@ function createMainWindow() {
 	} else {
 		serveURL(window);
 	}
-
-	tikfinity.start();
 }
 
 app.once('ready', createMainWindow);

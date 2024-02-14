@@ -46,6 +46,9 @@ devDependencies:
   autoprefixer:
     specifier: ^10.4.17
     version: 10.4.17(postcss@8.4.33)
+  check-dependencies:
+    specifier: ^2.0.0
+    version: 2.0.0
   concurrently:
     specifier: ^8.2.2
     version: 8.2.2
@@ -1563,6 +1566,15 @@ packages:
     dependencies:
       ansi-styles: 4.3.0
       supports-color: 7.2.0
+    dev: true
+
+  /check-dependencies@2.0.0:
+    resolution: {integrity: sha512-ui/u085SyYlRhaYShUDyS0fpTrfBBpz5bS0m+A1AW8HbsQefxrqLBKNzKAllIgdFZvKu0UHjrpzdobvGQ6khdg==}
+    engines: {node: '>=18.3'}
+    hasBin: true
+    dependencies:
+      picocolors: 1.0.0
+      semver: 7.5.4
     dev: true
 
   /check-error@1.0.3:

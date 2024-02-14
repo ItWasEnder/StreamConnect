@@ -1,0 +1,10 @@
+{
+	"extends": "./tsconfig.json",
+	"compilerOptions": {
+		"outDir": "./build/electron",
+		"module": "ESNext",
+		"esModuleInterop": true,
+		"noEmit": false
+	},
+	"include": ["./electron/**/*.ts"],
+}
