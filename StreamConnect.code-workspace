@@ -1,0 +1,31 @@
+{
+    "folders": [
+        {
+            "path": "."
+        }
+    ],
+    "extensions": {
+        "recommendations": [
+            "eamodio.gitlens",
+            "ms-python.python",
+            "dbaeumer.vscode-eslint",
+            "csstools.postcss",
+            "bradlc.vscode-tailwindcss"
+        ]
+    },
+    "settings": {
+        "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+        "eslint.workingDirectories": [
+            {
+                "directory": "./app",
+                "changeProcessCWD": true
+            }
+        ],
+        "editor.codeActionsOnSave": {
+            "source.fixAll.eslint": "always"
+        },
+        "editor.quickSuggestions": {
+            "strings": true
+        }
+    }
+}
