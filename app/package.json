@@ -8,6 +8,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "cross-env NODE_ENV=dev npm run dev:all",
+		"dev:noui": "cross-env NO_WINDOW=true NODE_ENV=dev npm run dev:all",
 		"dev:all": "concurrently -n=svelte,electron -c='#ff3e00',blue \"npm run dev:svelte\" \"npm run dev:electron\"",
 		"dev:svelte": "vite dev",
 		"dev:electron": "npm run build:electron && electron ./build/electron/electron.js",

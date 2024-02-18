@@ -8,9 +8,12 @@ contextBridge.exposeInMainWorld('electron', {
 	sendSync: (channel, data) => {
 		ipcRenderer.sendSync(channel, data);
 	},
-	receive: (channel, func) => {
+	on: (channel, func) => {
 		ipcRenderer.on(channel, (event, ...args) => func(...args));
-	}
+	},
+	once: (channel, func) => {
+		ipcRenderer.once(channel, (event, ...args) => func(...args));
+	},
 });
 
 module.exports = {};

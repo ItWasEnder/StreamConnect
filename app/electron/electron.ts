@@ -2,27 +2,44 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 import axios from 'axios';
 import windowStateManager from 'electron-window-state';
-import { app, BrowserWindow, ipcMain } from 'electron';
+import { app, BrowserWindow, ipcMain, session } from 'electron';
 import serve from 'electron-serve';
 import { fileURLToPath } from 'url';
+import child_process from 'child_process';
 import path from 'path';
+import fs from 'fs';
+import util from 'util';
 // import electronReloader from 'electron-reloader';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const __thisFile = fileURLToPath(import.meta.url);
+const __thisDir = path.dirname(__thisFile);
+const __logFile = path.join(app.getPath('userData'), 'streamconnect.log');
 
 const serveURL = serve({ directory: '.' });
 const port = process.env.PORT || 5173;
 const devmode = !app.isPackaged;
+
+// Clear the log file
+fs.writeFileSync(__logFile, '');
+
+const logFileStream = fs.createWriteStream(__logFile, { flags: 'a' });
+
+console.log = function () {
+	logFileStream.write(util.format.apply(null, arguments) + '\n');
+};
+
+console.error = function () {
+	logFileStream.write(util.format.apply(null, arguments) + '\n');
+};
+
 let window;
 
-
-
 console.log('Electron version', process.versions.electron);
-console.log(`------`);
-console.log(path.join(__dirname, 'assets', 'streamconnect.ico'));
-console.log(path.join(__dirname, 'preload.cjs'));
-console.log(`------`);
+console.log(`------ ------ ------ ------`);
+console.log(__logFile);
+console.log(path.join(__thisDir, 'assets', 'streamconnect.ico'));
+console.log(path.join(__thisDir, 'preload.cjs'));
+console.log(`------ ------ ------ ------`);
 
 function createWindow() {
 	let windowState = windowStateManager({
@@ -40,7 +57,7 @@ function createWindow() {
 			contextIsolation: true,
 			nodeIntegration: true,
 			devTools: true,
-			preload: path.join(__dirname, 'preload.cjs')
+			preload: path.join(__thisDir, 'preload.cjs')
 		},
 		x: windowState.x,
 		y: windowState.y,
@@ -54,8 +71,10 @@ function createWindow() {
 	window.webContents.openDevTools();
 
 	window.once('ready-to-show', () => {
-		window.show();
-		window.focus();
+		if (window) {
+			window.show();
+			window.focus();
+		}
 	});
 
 	window.on('closed', () => {
@@ -88,7 +107,75 @@ function createMainWindow() {
 	}
 }
 
-app.once('ready', createMainWindow);
+function runBackend() {
+	// Path to the Node script
+	const userDataPath = devmode
+		? path.join(__thisDir, '..', '..', 'StreamConnect-Bridge')
+		: app.getPath('userData');
+	const scriptPath = devmode
+		? path.join(__thisDir, '..', '..', 'StreamConnect-Bridge', 'dist', 'index.cjs')
+		: path.join(__thisDir, '..', 'StreamConnect-Bridge', 'dist', 'index.cjs');
+
+	console.log('dataPath', userDataPath);
+	console.log('scriptPath', scriptPath);
+	console.log(`------ ------ ------ ------`);
+
+	const args = ['--data', userDataPath, '--backend'];
+
+	// check if the script exists
+	if (!fs.existsSync(scriptPath)) {
+		console.log('Script not found:', scriptPath);
+		return;
+	}
+
+	const childProcess = child_process.fork(scriptPath, args, { stdio: 'pipe' });
+
+	childProcess.stdout?.on('data', (data) => {
+		console.log(`${data}`);
+	});
+
+	childProcess.stderr?.on('data', (data) => {
+		console.error(`${data}`);
+	});
+
+	childProcess.on('close', (code) => {
+		console.log(`child process exited with code ${code}`);
+	});
+}
+
+ipcMain.on('set-cookie', async (event, data) => {
+	console.log('set-cookie:', data);
+
+	const { name, value } = data;
+
+	if (!name || !value) {
+		return;
+	}
+
+	await session.defaultSession.cookies
+		.set({
+			url: `http://localhost:${port}`,
+			name,
+			value,
+			path: '/',
+			secure: true,
+			httpOnly: true,
+			sameSite: 'strict'
+		})
+		.catch((e) => {
+			console.error(e);
+		});
+});
+
+app.once('ready', () => {
+	createMainWindow();
+
+	try {
+		runBackend();
+	} catch (e) {
+		console.error(e);
+	}
+});
 
 app.on('activate', () => {
 	if (!window) {

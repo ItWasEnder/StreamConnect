@@ -3,7 +3,10 @@
 declare global {
 	namespace App {
 		// interface Error {}
-		// interface Locals {}
+		interface Locals {
+			// Allow session to be used in SvelteKit
+			session: any;
+		}
 		// interface PageData {}
 		// interface PageState {}
 		// interface Platform {}
