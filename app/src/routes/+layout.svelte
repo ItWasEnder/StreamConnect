@@ -7,42 +7,46 @@
 
 	export let data: LayoutData;
 
+	const themes = ['dark', 'dracula', 'sunset', 'forest', 'coffee', 'light'];
+	let themeIndex = 0;
+
 	import { onMount } from 'svelte';
 	onMount(() => {
 		// Listen for settings changes from application
-		window.electron.on('settings-save', (newData) => {
-			console.log('data-recieved', newData);
-			data.session.theme = newData?.theme ?? data.session.theme;
-			// Update the theme in the DOM
-			updateThemeCookie();
+		window.electron.on('get-cookie-reply', (cookies) => {
+			console.log('cookie recieved', cookies);
+			const theme = cookies.find((cookie) => cookie.name === 'theme')?.value;
+
+			console.log('theme found', theme);
+			data.session.theme = theme ?? data.session.theme;
 		});
+
+		console.log('getting theme');
+		window.electron.send('get-cookie', {});
 	});
 
-	function toggleTheme() {
-		data.session.theme = data.session.theme === 'dark' ? 'light' : 'dark';
+	function nextTheme() {
+		if (themeIndex === themes.length - 1) {
+			themeIndex = 0;
+		}
+
+		data.session.theme = themes[themeIndex];
+		themeIndex++;
+
 		updateThemeCookie();
 	}
 
 	async function updateThemeCookie() {
 		window.electron.send('set-cookie', { name: 'theme', value: data.session.theme });
-		// does not work in static
-		if (browser) {
-			console.log('updating theme in server.ts');
-			await fetch('/theme', {
-				method: 'PUT',
-				body: data.session.theme
-			});
-		}
 	}
 </script>
-
-<button on:click={toggleTheme}>Toggle Theme</button>
 
 <div id="theme-container" data-theme={data.session.theme}>
 	<div id="app-content">
 		<Header />
 		<div class="flex overflow-hidden page-max">
 			<LeftNavbar />
+			<button on:click={nextTheme} class="btn btn-info btn-square">Next Theme</button>
 			<div class="w-full m-5">
 				<div
 					class="pg-content bg-base-200 p-5 rounded-box

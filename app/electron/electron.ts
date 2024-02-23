@@ -9,7 +9,6 @@ import child_process from 'child_process';
 import path from 'path';
 import fs from 'fs';
 import util from 'util';
-// import electronReloader from 'electron-reloader';
 
 const __thisFile = fileURLToPath(import.meta.url);
 const __thisDir = path.dirname(__thisFile);
@@ -18,6 +17,16 @@ const __logFile = path.join(app.getPath('userData'), 'streamconnect.log');
 const serveURL = serve({ directory: '.' });
 const port = process.env.PORT || 5173;
 const devmode = !app.isPackaged;
+
+// if (devmode) {
+// 	try {
+// 		require('electron-reloader')(module, {
+// 			watchRenderer: true,
+// 			ignore: ['*.js', '*.map'],
+// 			watch: ['*.{html,css}', '*.ts']
+// 		});
+// 	} catch (_) {}
+// }
 
 // Clear the log file
 fs.writeFileSync(__logFile, '');
@@ -100,6 +109,11 @@ function createMainWindow() {
 		window = null;
 	});
 
+	const mainSession = window.webContents.session.cookies;
+	mainSession.get({}).then((cookies) => {
+		console.log('cookies-load:', cookies);
+	});
+
 	if (devmode) {
 		loadVite(port);
 	} else {
@@ -149,10 +163,12 @@ ipcMain.on('set-cookie', async (event, data) => {
 	const { name, value } = data;
 
 	if (!name || !value) {
+		console.log('Invalid cookie data');
 		return;
 	}
 
-	await session.defaultSession.cookies
+	const mainSession = window.webContents.session.cookies;
+	mainSession
 		.set({
 			url: `http://localhost:${port}`,
 			name,
@@ -160,11 +176,42 @@ ipcMain.on('set-cookie', async (event, data) => {
 			path: '/',
 			secure: true,
 			httpOnly: true,
-			sameSite: 'strict'
+			sameSite: 'strict',
+			session: false,
+			expirationDate: 253375378405
 		})
 		.catch((e) => {
 			console.error(e);
 		});
+
+	session.defaultSession.cookies.get({}).then((cookies) => {
+		console.log('cookies:', cookies);
+	});
+
+	// const mainSession = window.webContents.session.cookies;
+	// mainSession
+	// 	.set({
+	// 		url: `http://localhost:${port}`,
+	// 		name: 'testItem',
+	// 		value: 'dev=1',
+	// 		path: '/',
+	// 		secure: false,
+	// 		httpOnly: false,
+	// 		sameSite: 'strict',
+	// 		expirationDate: 253375378405
+	// 	})
+	// 	.catch((e) => {
+	// 		console.error(e);
+	// 	});
+
+	// session.defaultSession.cookies.get({}).then((cookies) => {
+	// 	console.log('cookies:', cookies);
+	// });
+});
+
+ipcMain.on('get-cookie', async (event, data) => {
+	const cookies = await session.defaultSession.cookies.get({});
+	window.webContents.send('get-cookie-reply', cookies);
 });
 
 app.once('ready', () => {
