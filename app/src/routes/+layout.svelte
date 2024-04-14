@@ -1,5 +1,6 @@
 <script lang="ts">
 	import '../app.css';
+	import 'iconify-icon';
 	import LeftNavbar from '$lib/components/LeftNavbar.svelte';
 	import Header from '$lib/components/Header.svelte';
 	import { browser } from '$app/environment';
@@ -13,16 +14,18 @@
 	import { onMount } from 'svelte';
 	onMount(() => {
 		// Listen for settings changes from application
-		window.electron.on('get-cookie-reply', (cookies) => {
-			console.log('cookie recieved', cookies);
-			const theme = cookies.find((cookie) => cookie.name === 'theme')?.value;
+		if (window.electron) {
+			window.electron.on('get-cookie-reply', (cookies) => {
+				console.log('cookie recieved', cookies);
+				const theme = cookies.find((cookie) => cookie.name === 'theme')?.value;
 
-			console.log('theme found', theme);
-			data.session.theme = theme ?? data.session.theme;
-		});
+				console.log('theme found', theme);
+				data.session.theme = theme ?? data.session.theme;
+			});
 
-		console.log('getting theme');
-		window.electron.send('get-cookie', {});
+			console.log('getting theme');
+			window.electron.send('get-cookie', {});
+		}
 	});
 
 	function nextTheme() {

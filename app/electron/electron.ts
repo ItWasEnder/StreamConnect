@@ -10,6 +10,9 @@ import path from 'path';
 import fs from 'fs';
 import util from 'util';
 
+app.commandLine.appendSwitch('log-file', 'C:/Users/ender/Documents/Dev/Git/StreamConnect/log.txt');
+app.commandLine.appendSwitch('enable-logging');
+
 const __thisFile = fileURLToPath(import.meta.url);
 const __thisDir = path.dirname(__thisFile);
 const __logFile = path.join(app.getPath('userData'), 'streamconnect.log');
@@ -50,6 +53,12 @@ console.log(path.join(__thisDir, 'assets', 'streamconnect.ico'));
 console.log(path.join(__thisDir, 'preload.cjs'));
 console.log(`------ ------ ------ ------`);
 
+try {
+	runBackend();
+} catch (e) {
+	console.error(e);
+}
+
 function createWindow() {
 	let windowState = windowStateManager({
 		defaultWidth: 800,
@@ -59,8 +68,8 @@ function createWindow() {
 	window = new BrowserWindow({
 		backgroundColor: 'whitesmoke',
 		// icon: path.join(__dirname, 'assets', 'streamconnect.ico'),
-		minHeight: 450,
-		minWidth: 600,
+		minHeight: 480,
+		minWidth: 900,
 		autoHideMenuBar: true,
 		webPreferences: {
 			contextIsolation: true,
@@ -122,25 +131,60 @@ function createMainWindow() {
 }
 
 function runBackend() {
-	// Path to the Node script
-	const userDataPath = devmode
-		? path.join(__thisDir, '..', '..', 'StreamConnect-Bridge')
-		: app.getPath('userData');
-	const scriptPath = devmode
-		? path.join(__thisDir, '..', '..', 'StreamConnect-Bridge', 'dist', 'index.cjs')
-		: path.join(__thisDir, '..', 'StreamConnect-Bridge', 'dist', 'index.cjs');
+	const userDataPath = devmode ? path.join(__thisDir, '..', '..') : app.getPath('userData');
 
-	console.log('dataPath', userDataPath);
-	console.log('scriptPath', scriptPath);
-	console.log(`------ ------ ------ ------`);
+	const backendPath = path.join(userDataPath, 'StreamConnect-Bridge');
+	const scriptPath = path.join(backendPath, 'dist', 'index.cjs');
 
-	const args = ['--data', userDataPath, '--backend'];
+	if (!devmode) {
+		const copyBackend = path.join(__thisDir, '..', 'StreamConnect-Bridge');
+
+		console.log('dataPath', userDataPath);
+		console.log('backendPath', backendPath);
+		console.log('scriptPath', scriptPath);
+		console.log('copyBackend', copyBackend);
+		console.log(`------ ------ ------ ------`);
+
+		const dist = path.join(backendPath, 'dist');
+
+		if (!fs.existsSync(backendPath)) fs.mkdirSync(backendPath);
+		if (!fs.existsSync(dist)) fs.mkdirSync(dist);
+
+		const distFiles = fs.readdirSync(path.join(copyBackend, 'dist'));
+		distFiles.forEach((file) => {
+			const locFile = path.join(dist, file);
+			if (fs.existsSync(locFile)) fs.unlinkSync(locFile);
+			fs.copyFileSync(path.join(copyBackend, 'dist', file), locFile);
+		});
+
+		const proto = path.join(backendPath, 'proto');
+		if (!fs.existsSync(proto)) fs.mkdirSync(proto);
+
+		const protoFiles = fs.readdirSync(path.join(copyBackend, 'proto'));
+		protoFiles.forEach((file) => {
+			const locFile = path.join(proto, file);
+			if (fs.existsSync(locFile)) fs.unlinkSync(locFile);
+			fs.copyFileSync(path.join(copyBackend, 'proto', file), locFile);
+		});
+
+		const storage = path.join(backendPath, 'storage');
+		if (!fs.existsSync(storage)) fs.mkdirSync(storage);
+		const storageFiles = fs.readdirSync(path.join(copyBackend, 'storage'));
+		storageFiles.forEach((file) => {
+			const locFile = path.join(backendPath, 'storage', file);
+			if (fs.existsSync(locFile)) return;
+			fs.copyFileSync(path.join(copyBackend, 'storage', file), locFile);
+		});
+	}
 
 	// check if the script exists
 	if (!fs.existsSync(scriptPath)) {
 		console.log('Script not found:', scriptPath);
 		return;
 	}
+
+	const args = ['--data', backendPath, '--backend'];
+	console.log('Running backend script:', scriptPath, args);
 
 	const childProcess = child_process.fork(scriptPath, args, { stdio: 'pipe' });
 
@@ -216,12 +260,6 @@ ipcMain.on('get-cookie', async (event, data) => {
 
 app.once('ready', () => {
 	createMainWindow();
-
-	try {
-		runBackend();
-	} catch (e) {
-		console.error(e);
-	}
 });
 
 app.on('activate', () => {

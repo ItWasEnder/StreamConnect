@@ -16,6 +16,7 @@
 				<li class:active={$route === '/'}><a href="/">Start</a></li>
 				<li class:active={$route === '/connections'}><a href="/connections">Connections</a></li>
 				<li class:active={$route === '/settings'}><a href="/settings">Settings</a></li>
+				<li class:active={$route === '/triggers'}><a href="/triggers">Triggers</a></li>
 				<li class:active={$route === '/support'}><a href="/support">Support</a></li>
 			</div>
 		</ul>
