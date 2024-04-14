@@ -5,7 +5,7 @@
 
 	const URL = 'http://127.0.0.1:14228';
 
-	const triggersStore = writable<Trigger[]>([]);
+	const triggersStore = writable<FETrigger[]>([]);
 	$: visibleTriggers = search.length > 0 ? filter() : $triggersStore;
 
 	let editingTrigger: FETrigger | null = null;
@@ -55,8 +55,8 @@
 				events: [],
 				actions: [],
 				id: crypto.randomUUID(),
-				__newInstance: true,
-				__cdSeconds: 5
+				__new: true,
+				__cd: 5
 			};
 		}
 
@@ -113,9 +113,9 @@
 	}
 
 	async function submitUpdateAndClose() {
-		editingTrigger.cooldown = editingTrigger.__cdSeconds * 1000;
+		editingTrigger.cooldown = editingTrigger.__cd * 1000;
 
-		if (editingTrigger.__newInstance) {
+		if (editingTrigger.__new) {
 			await createTrigger();
 		} else {
 			await updateTrigger();
@@ -164,7 +164,7 @@
 			<p class="font-bold md:text-lg sm:text-sm mb-3">{modalTitle}</p>
 
 			<form class="manage-form" on:submit|preventDefault={submitUpdateAndClose}>
-				{#if !editingTrigger.__newInstance}
+				{#if !editingTrigger.__new}
 					<p>ID: <span class="badge badge-accent">{editingTrigger.id}</span></p>
 				{:else}
 					<label>
@@ -194,7 +194,7 @@
 						<input
 							type="text"
 							class="bg-transparent w-10"
-							bind:value={editingTrigger.__cdSeconds}
+							bind:value={editingTrigger.__cd}
 						/></span
 					>
 					<input
@@ -202,7 +202,7 @@
 						min="0"
 						max="120"
 						step="1"
-						bind:value={editingTrigger.__cdSeconds}
+						bind:value={editingTrigger.__cd}
 						class="range range-xs max-w-md range-accent"
 					/>
 				</label>

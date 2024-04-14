@@ -20,8 +20,8 @@ declare global {
 	}
 
 	interface FETrigger extends Trigger {
-		__newInstance?: boolean;
-		__cdSeconds?: number;
+		__new?: boolean;
+		__cd?: number;
 	}
 
 	interface Trigger {
