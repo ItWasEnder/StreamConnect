@@ -2,6 +2,7 @@
 	import { onMount } from 'svelte';
 	import { writable } from 'svelte/store';
 	import TriggerCard from '$lib/components/TriggerCard.svelte';
+	import TriggerEditor from '$lib/components/TriggerEditor.svelte';
 
 	const URL = 'http://127.0.0.1:14228';
 
@@ -9,8 +10,7 @@
 	$: visibleTriggers = search.length > 0 ? filter() : $triggersStore;
 
 	let editingTrigger: FETrigger | null = null;
-	let triggerManager: HTMLDialogElement;
-	let modalTitle = '';
+	let triggerEditor: TriggerEditor;
 	let search = '';
 
 	function filter() {
@@ -29,7 +29,7 @@
 				const triggers = await response.json();
 
 				for (let trigger of triggers) {
-					trigger.__cdSeconds = trigger.cooldown / 1000;
+					trigger.__cd = trigger.cooldown / 1000;
 				}
 
 				triggersStore.set(triggers);
@@ -43,7 +43,7 @@
 
 	onMount(loadTriggers);
 
-	function selectTrigger(trigger?: Trigger) {
+	function editTrigger(trigger?: Trigger) {
 		if (trigger) {
 			editingTrigger = { ...trigger };
 		} else {
@@ -60,8 +60,11 @@
 			};
 		}
 
-		modalTitle = editingTrigger.name;
-		if (triggerManager) triggerManager.showModal(); // Show the modal after setting the selected trigger
+		openTriggerManager();
+	}
+
+	function openTriggerManager() {
+		if (triggerEditor && editingTrigger) triggerEditor.openWith(editingTrigger);
 	}
 
 	async function updateTrigger() {
@@ -112,7 +115,7 @@
 		}
 	}
 
-	async function submitUpdateAndClose() {
+	async function submitUpdateAndClose(editedTrigger: FETrigger) {
 		editingTrigger.cooldown = editingTrigger.__cd * 1000;
 
 		if (editingTrigger.__new) {
@@ -121,14 +124,16 @@
 			await updateTrigger();
 		}
 
-		if (triggerManager) {
-			triggerManager.close(); // Close the modal dialog
-		}
+		if (triggerEditor) triggerEditor.close();
 	}
 </script>
 
 <div>
-	<button class="btn btn-warning m-5" on:click={() => selectTrigger(undefined)}>New</button>
+	<TriggerEditor bind:this={triggerEditor} clickOutExit={false}/>
+</div>
+
+<div>
+	<button class="btn btn-warning m-5" on:click={() => editTrigger(undefined)}>New</button>
 
 	<input
 		type="text"
@@ -149,91 +154,9 @@
 
 <div class="grid md:grid-cols-3 sm:grid-cols-1 xl:grid-cols-5 gap-6">
 	{#each visibleTriggers as trigger (trigger.id)}
-		<TriggerCard {trigger} button={() => selectTrigger(trigger)} />
+		<TriggerCard {trigger} button={() => editTrigger(trigger)} />
 	{/each}
 </div>
 
-<dialog id="triggerManager" class="modal" bind:this={triggerManager}>
-	<!-- Close by clicking out of -->
-    <form method="dialog" class="modal-backdrop">
-		<button>close</button>
-	</form>
-
-	<div class="modal-box w-11/12 max-w-5xl">
-		{#if editingTrigger}
-			<p class="font-bold md:text-lg sm:text-sm mb-3">{modalTitle}</p>
-
-			<form class="manage-form" on:submit|preventDefault={submitUpdateAndClose}>
-				{#if !editingTrigger.__new}
-					<p>ID: <span class="badge badge-accent">{editingTrigger.id}</span></p>
-				{:else}
-					<label>
-						<p>ID:</p>
-						<input class="manage-form-input" type="text" bind:value={editingTrigger.id} />
-					</label>
-				{/if}
-				<label>
-					<p>Status:</p>
-					<input
-						type="checkbox"
-						class="toggle toggle-success"
-						bind:checked={editingTrigger.enabled}
-					/>
-				</label>
-				<label>
-					<p>Log:</p>
-					<input type="checkbox" class="toggle toggle-success" bind:checked={editingTrigger.log} />
-				</label>
-				<label>
-					<p>Name:</p>
-					<input class="manage-form-input" type="text" bind:value={editingTrigger.name} />
-				</label>
-				<label>
-					<p>Cooldown:</p>
-					<span class="w-10 gap">
-						<input
-							type="text"
-							class="bg-transparent w-10"
-							bind:value={editingTrigger.__cd}
-						/></span
-					>
-					<input
-						type="range"
-						min="0"
-						max="120"
-						step="1"
-						bind:value={editingTrigger.__cd}
-						class="range range-xs max-w-md range-accent"
-					/>
-				</label>
-
-				<!-- Modal Actions -->
-				<div class="modal-action">
-					<form method="dialog">
-						<button class="btn btn-sm btn-circle text-error btn-ghost absolute right-2 top-2"
-							>✕</button
-						>
-					</form>
-
-					<button type="submit" class="btn btn-success"> Submit </button>
-				</div>
-			</form>
-		{:else}
-			<p class="text-error">No trigger selected</p>
-		{/if}
-	</div>
-</dialog>
-
 <style lang="postcss">
-	.manage-form label {
-		@apply gap-2;
-		margin-top: 1rem;
-		display: flex;
-		align-items: center;
-	}
-
-	.manage-form-input {
-		@apply input input-info bg-slate-700 text-base-content w-3/6;
-		outline: none;
-	}
 </style>

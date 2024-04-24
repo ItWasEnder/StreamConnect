@@ -1,0 +1,54 @@
+[349592:0413/212657.319:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[349592:0413/212657.528:INFO:CONSOLE(12)] "getting theme", source: app://-/_app/immutable/nodes/0.8x4SQWda.js (12)
+[349592:0413/212657.549:INFO:CONSOLE(12)] "cookie recieved [object Object]", source: app://-/_app/immutable/nodes/0.8x4SQWda.js (12)
+[349592:0413/212657.549:INFO:CONSOLE(12)] "theme found coffee", source: app://-/_app/immutable/nodes/0.8x4SQWda.js (12)
+[349592:0413/212657.761:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[349804:0413/212659.567:ERROR:shared_image_manager.cc(220)] SharedImageManager::ProduceSkia: Trying to Produce a Skia representation from a non-existent mailbox.
+[351496:0413/213020.346:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[351496:0413/213020.585:INFO:CONSOLE(12)] "getting theme", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[351496:0413/213020.637:INFO:CONSOLE(12)] "cookie recieved ", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[351496:0413/213020.637:INFO:CONSOLE(12)] "theme found undefined", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[351496:0413/213020.848:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[351496:0413/213035.981:INFO:CONSOLE(2)] "Trigger updated successfully", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[351496:0413/213043.385:INFO:CONSOLE(2)] "Trigger updated successfully", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[351496:0413/213106.561:INFO:CONSOLE(2)] "Trigger updated successfully", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[351496:0413/213113.737:INFO:CONSOLE(2)] "Trigger updated successfully", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[351496:0413/213127.569:INFO:CONSOLE(2)] "Trigger updated successfully", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[351496:0413/213154.105:INFO:CONSOLE(12)] "getting theme", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[351496:0413/213154.108:INFO:CONSOLE(12)] "cookie recieved [object Object]", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[351496:0413/213154.108:INFO:CONSOLE(12)] "theme found coffee", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[387976:0415/210821.323:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[387976:0415/210821.792:INFO:CONSOLE(12)] "getting theme", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[387976:0415/210821.825:INFO:CONSOLE(12)] "cookie recieved [object Object]", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[387976:0415/210821.825:INFO:CONSOLE(12)] "theme found coffee", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[387976:0415/210822.056:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[19556:0416/123544.591:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[19556:0416/123544.796:INFO:CONSOLE(12)] "getting theme", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[19556:0416/123544.818:INFO:CONSOLE(12)] "cookie recieved [object Object]", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[19556:0416/123544.818:INFO:CONSOLE(12)] "theme found coffee", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[19556:0416/123544.985:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[154436:0418/024828.760:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[154436:0418/024828.988:INFO:CONSOLE(12)] "getting theme", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[154436:0418/024829.012:INFO:CONSOLE(12)] "cookie recieved [object Object]", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[154436:0418/024829.012:INFO:CONSOLE(12)] "theme found coffee", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[154436:0418/024829.232:WARNING:archive.cc(197)] Opening C:\Users\ender\AppData\Local\Programs\streamconnect\resources\app.asar\: FILE_ERROR_FAILED
+[154436:0418/024922.336:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024922.471:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024922.557:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024922.655:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024922.930:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024923.798:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024923.912:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024923.999:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024924.133:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024924.146:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024924.204:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024925.510:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024925.618:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024925.740:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[154436:0418/024925.758:INFO:CONSOLE(2)] "Filtering triggers", source: app://-/_app/immutable/nodes/7.HxnhhazH.js (2)
+[162108:0418/034858.416:WARNING:archive.cc(197)] Opening C:\Users\ender\Documents\Dev\Git\StreamConnect\app\dist\win-unpacked\resources\app.asar\: FILE_ERROR_FAILED
+[162108:0418/034858.833:INFO:CONSOLE(12)] "getting theme", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[162108:0418/034858.887:INFO:CONSOLE(12)] "cookie recieved [object Object]", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[162108:0418/034858.887:INFO:CONSOLE(12)] "theme found coffee", source: app://-/_app/immutable/nodes/0.DQPEd67F.js (12)
+[162108:0418/034859.044:WARNING:archive.cc(197)] Opening C:\Users\ender\Documents\Dev\Git\StreamConnect\app\dist\win-unpacked\resources\app.asar\: FILE_ERROR_FAILED
